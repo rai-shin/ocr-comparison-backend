@@ -1,0 +1,29 @@
+﻿# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# PaddleOCR model caches
+.paddlex/
+.paddleocr/
+
+# Temporary files
+*.log
+.pytest_cache/
+temp/
+tmp/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
