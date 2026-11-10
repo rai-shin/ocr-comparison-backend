@@ -1019,7 +1019,10 @@ async def tesseract_ocr_endpoint(
 
         # STEP 2: CHECK TESSERACT
         print("[Tesseract] Step 2: Checking Tesseract installation...", flush=True)
-        print(f"[Tesseract] Executable: {TESSERACT_CMD}", flush=True)
+        print(f"[Tesseract] Executable: {TESSERACT_CMD!r}", flush=True)
+        print(f"[Tesseract] Path exists: {os.path.exists(TESSERACT_CMD)}", flush=True)
+        print(f"[Tesseract] Is file: {os.path.isfile(TESSERACT_CMD)}", flush=True)
+        print(f"[Tesseract] Found in PATH: {shutil.which('tesseract')}", flush=True)
 
         if not os.path.isfile(TESSERACT_CMD):
             raise HTTPException(
