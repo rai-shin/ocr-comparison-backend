@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Configure Tesseract for Linux.
 ENV TESSERACT_CMD=/usr/bin/tesseract
 ENV PYTHONUNBUFFERED=1
+ENV PADDLE_PDX_ENABLE_MKLDNN_BYDEFAULT=False
 
 # Install the existing pinned Python dependencies.
 COPY requirements.txt .
