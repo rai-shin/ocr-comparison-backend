@@ -474,6 +474,7 @@ async def preprocess_endpoint(
 _paddle_ocr = None
 
 
+
 def get_paddle_ocr():
     global _paddle_ocr
 
@@ -488,6 +489,8 @@ def get_paddle_ocr():
 
             _paddle_ocr = PaddleOCR(
                 lang="en",
+                text_detection_model_name="PP-OCRv5_mobile_det",
+                text_recognition_model_name="en_PP-OCRv5_mobile_rec",
                 use_doc_orientation_classify=False,
                 use_doc_unwarping=False,
                 use_textline_orientation=False,
@@ -507,12 +510,10 @@ def get_paddle_ocr():
             print("[PaddleOCR] MODEL INITIALIZATION FAILED", flush=True)
             print(f"[PaddleOCR] Error: {error}", flush=True)
             traceback.print_exc()
-
             raise
 
-        print("=" * 60 + "\n", flush=True)
-
     return _paddle_ocr
+
 
 
 # --------------------------------------------------
