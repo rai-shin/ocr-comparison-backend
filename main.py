@@ -491,6 +491,8 @@ def get_paddle_ocr():
                 lang="en",
                 text_detection_model_name="PP-OCRv5_mobile_det",
                 text_recognition_model_name="en_PP-OCRv5_mobile_rec",
+                text_det_limit_side_len=960,
+                text_det_limit_type="max",
                 use_doc_orientation_classify=False,
                 use_doc_unwarping=False,
                 use_textline_orientation=False,
@@ -820,6 +822,38 @@ async def paddle_ocr_endpoint(
             )
 
         # STEP 5: INITIALIZE MODEL
+        # CONVERT WEBP TO PNG FOR PADDLEOCR
+        if extension == ".webp":
+            print(
+                "[PaddleOCR] WebP detected. Converting to PNG...",
+                flush=True,
+            )
+
+            webp_image = cv2.imread(ocr_input_path)
+
+            if webp_image is None:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Unable to convert WebP image for PaddleOCR.",
+                )
+
+            paddle_png_path = os.path.join(
+                temp_dir,
+                "paddle_input.png",
+            )
+
+            if not cv2.imwrite(paddle_png_path, webp_image):
+                raise HTTPException(
+                    status_code=500,
+                    detail="Failed to convert WebP image for PaddleOCR.",
+                )
+
+            ocr_input_path = paddle_png_path
+
+            print(
+                "[PaddleOCR] WebP successfully converted to PNG.",
+                flush=True,
+            )
         print("[PaddleOCR] Step 5: Getting OCR engine...", flush=True)
 
         engine = get_paddle_ocr()
