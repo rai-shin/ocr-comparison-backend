@@ -10,9 +10,6 @@ import traceback
 from pathlib import Path
 from paddleocr import PaddleOCR
 
-import pytesseract
-from pytesseract import Output
-
 import cv2
 import numpy as np
 
@@ -21,8 +18,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(
-    title="OCR Comparison API",
-    description="Independent PaddleOCR and Tesseract comparison service",
+    title="PaddleOCR API",
+    description="PaddleOCR image processing and OCR service",
     version="1.0.0",
 )
 
@@ -47,16 +44,7 @@ app.add_middleware(
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 MAX_FILE_SIZE = 15 * 1024 * 1024
-MAX_IMAGE_SIDE = 2000
-
-TESSERACT_CMD = os.getenv(
-    "TESSERACT_CMD",
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
-
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
-
-TESSERACT_CONFIG = "--oem 3 --psm 6"
+MAX_IMAGE_SIDE = 4096
 
 DENOISE_STRENGTH = 10
 MAX_SKEW_ANGLE = 15
@@ -65,8 +53,8 @@ MIN_DESKEW_ANGLE = 0.3
 CLAHE_CLIP_LIMIT = 2.0
 CLAHE_TILE_GRID_SIZE = (8, 8)
 
-ADAPTIVE_BLOCK_SIZE = 11
-ADAPTIVE_C = 2
+ADAPTIVE_BLOCK_SIZE = 31
+ADAPTIVE_C = 5
 
 
 # --------------------------------------------------
@@ -320,7 +308,7 @@ def preprocess_image(
 async def root():
     return {
         "success": True,
-        "message": "OCR Comparison API is running.",
+        "message": "PaddleOCR API is running.",
         "version": "1.0.0",
     }
 
@@ -329,8 +317,8 @@ async def root():
 async def api_status():
     return {
         "success": True,
-        "service": "OCR Comparison Backend",
-        "engines": ["PaddleOCR", "Tesseract"],
+        "service": "PaddleOCR Backend",
+        "engines": ["PaddleOCR"],
         "preprocessing": [
             "grayscale",
             "resize",
@@ -474,7 +462,6 @@ async def preprocess_endpoint(
 _paddle_ocr = None
 
 
-
 def get_paddle_ocr():
     global _paddle_ocr
 
@@ -515,7 +502,6 @@ def get_paddle_ocr():
             raise
 
     return _paddle_ocr
-
 
 
 # --------------------------------------------------
@@ -572,73 +558,6 @@ def format_paddle_results(predictions):
                 "status": status,
                 "flagged": confidence < 70,
             })
-
-    return results
-
-
-# --------------------------------------------------
-# TESSERACT RESULT FORMATTER
-# --------------------------------------------------
-
-def format_tesseract_results(data):
-    grouped = {}
-
-    total_words = len(data["text"])
-
-    for index in range(total_words):
-        word = str(data["text"][index]).strip()
-
-        if not word:
-            continue
-
-        try:
-            confidence = float(data["conf"][index])
-        except (ValueError, TypeError):
-            continue
-
-        if confidence < 0:
-            continue
-
-        key = (
-            data["page_num"][index],
-            data["block_num"][index],
-            data["par_num"][index],
-            data["line_num"][index],
-        )
-
-        if key not in grouped:
-            grouped[key] = {
-                "words": [],
-                "confidences": [],
-            }
-
-        grouped[key]["words"].append(word)
-        grouped[key]["confidences"].append(confidence)
-
-    results = []
-
-    for line_data in grouped.values():
-        text = " ".join(line_data["words"])
-
-        confidence = round(
-            sum(line_data["confidences"])
-            / len(line_data["confidences"]),
-            2,
-        )
-
-        if confidence >= 90:
-            status = "HIGH"
-        elif confidence >= 70:
-            status = "MODERATE"
-        else:
-            status = "NEEDS_REVIEW"
-
-        results.append({
-            "text": text,
-            "confidence": confidence,
-            "status": status,
-            "flagged": confidence < 70,
-        })
 
     return results
 
@@ -821,8 +740,7 @@ async def paddle_ocr_endpoint(
                 flush=True,
             )
 
-        # STEP 5: INITIALIZE MODEL
-        # CONVERT WEBP TO PNG FOR PADDLEOCR
+        # STEP 5: CONVERT WEBP TO PNG FOR PADDLEOCR
         if extension == ".webp":
             print(
                 "[PaddleOCR] WebP detected. Converting to PNG...",
@@ -854,6 +772,7 @@ async def paddle_ocr_endpoint(
                 "[PaddleOCR] WebP successfully converted to PNG.",
                 flush=True,
             )
+
         print("[PaddleOCR] Step 5: Getting OCR engine...", flush=True)
 
         engine = get_paddle_ocr()
@@ -868,7 +787,7 @@ async def paddle_ocr_endpoint(
 
         predictions = engine.predict(
             ocr_input_path,
-            return_word_box=True,
+            return_word_box=False,
         )
 
         ocr_time = round(
@@ -994,352 +913,3 @@ async def paddle_ocr_endpoint(
         if temp_dir:
             shutil.rmtree(temp_dir, ignore_errors=True)
             print("[PaddleOCR] Temporary files cleaned up.", flush=True)
-
-
-# --------------------------------------------------
-# TESSERACT OCR API ENDPOINT WITH DEBUG LOGGING
-# --------------------------------------------------
-
-@app.post("/api/ocr/tesseract")
-async def tesseract_ocr_endpoint(
-    file: UploadFile = File(...),
-    preprocessing: bool = Form(False),
-    grayscale: bool = Form(False),
-    resize: bool = Form(False),
-    denoising: bool = Form(False),
-    deskewing: bool = Form(False),
-    contrast: bool = Form(False),
-    adaptive_threshold: bool = Form(False),
-):
-    request_start = time.perf_counter()
-
-    print("\n" + "=" * 60, flush=True)
-    print("[Tesseract] NEW REQUEST RECEIVED", flush=True)
-
-    temp_dir = None
-
-    try:
-        # STEP 1: VALIDATE FILE
-        print("[Tesseract] Step 1: Validating uploaded file...", flush=True)
-
-        extension = Path(file.filename or "").suffix.lower()
-
-        print(f"[Tesseract] Filename: {file.filename}", flush=True)
-        print(f"[Tesseract] Extension: {extension}", flush=True)
-
-        if extension not in ALLOWED_EXTENSIONS:
-            raise HTTPException(
-                status_code=400,
-                detail="Only JPG, JPEG, PNG, and WEBP images are supported.",
-            )
-
-        content = await file.read()
-
-        print(
-            f"[Tesseract] Uploaded size: {len(content) / 1024:.2f} KB",
-            flush=True,
-        )
-
-        if not content:
-            raise HTTPException(
-                status_code=400,
-                detail="Uploaded image is empty.",
-            )
-
-        if len(content) > MAX_FILE_SIZE:
-            raise HTTPException(
-                status_code=413,
-                detail="Image exceeds the 15 MB upload limit.",
-            )
-
-        # STEP 2: CHECK TESSERACT
-        print("[Tesseract] Step 2: Checking Tesseract installation...", flush=True)
-        print(f"[Tesseract] Executable: {TESSERACT_CMD!r}", flush=True)
-        print(f"[Tesseract] Path exists: {os.path.exists(TESSERACT_CMD)}", flush=True)
-        print(f"[Tesseract] Is file: {os.path.isfile(TESSERACT_CMD)}", flush=True)
-        print(f"[Tesseract] Found in PATH: {shutil.which('tesseract')}", flush=True)
-
-        if not os.path.isfile(TESSERACT_CMD):
-            raise HTTPException(
-                status_code=500,
-                detail="Tesseract executable was not found.",
-            )
-
-        print("[Tesseract] Executable found.", flush=True)
-        print(f"[Tesseract] OCR config: {TESSERACT_CONFIG}", flush=True)
-
-        # STEP 3: SAVE IMAGE
-        print("[Tesseract] Step 3: Saving uploaded image...", flush=True)
-
-        temp_dir = tempfile.mkdtemp(prefix="tesseract_ocr_")
-
-        original_path = os.path.join(
-            temp_dir,
-            "original" + extension,
-        )
-
-        processed_path = os.path.join(
-            temp_dir,
-            "processed.png",
-        )
-
-        with open(original_path, "wb") as image_file:
-            image_file.write(content)
-
-        print("[Tesseract] Image saved successfully.", flush=True)
-
-        # STEP 4: READ IMAGE
-        print("[Tesseract] Step 4: Reading image dimensions...", flush=True)
-
-        original_image = cv2.imread(original_path)
-
-        if original_image is None:
-            raise HTTPException(
-                status_code=400,
-                detail="Unable to decode uploaded image.",
-            )
-
-        original_height, original_width = original_image.shape[:2]
-
-        print(
-            f"[Tesseract] Image dimensions: "
-            f"{original_width} x {original_height}",
-            flush=True,
-        )
-
-        # STEP 5: PREPROCESSING
-        print("[Tesseract] Step 5: Checking preprocessing settings...", flush=True)
-
-        settings = get_preprocessing_settings(
-            grayscale,
-            resize,
-            denoising,
-            deskewing,
-            contrast,
-            adaptive_threshold,
-        )
-
-        print(
-            f"[Tesseract] Preprocessing enabled: {preprocessing}",
-            flush=True,
-        )
-        print(f"[Tesseract] Settings: {settings}", flush=True)
-
-        preprocessing_result = {
-            "enabled": False,
-            "applied": [],
-            "timings_ms": {},
-            "total_time_ms": 0,
-        }
-
-        ocr_input_path = original_path
-
-        if preprocessing:
-            print("[Tesseract] Starting image preprocessing...", flush=True)
-
-            preprocessing_start = time.perf_counter()
-
-            preprocessing_result = preprocess_image(
-                original_path,
-                processed_path,
-                **settings,
-            )
-
-            ocr_input_path = processed_path
-
-            preprocessing_elapsed = round(
-                (time.perf_counter() - preprocessing_start) * 1000,
-                2,
-            )
-
-            print(
-                f"[Tesseract] Preprocessing completed "
-                f"({preprocessing_elapsed} ms)",
-                flush=True,
-            )
-
-            print(
-                f"[Tesseract] Applied: {preprocessing_result['applied']}",
-                flush=True,
-            )
-
-            dimensions = preprocessing_result.get(
-                "output_dimensions", {}
-            )
-
-            print(
-                f"[Tesseract] Processed dimensions: "
-                f"{dimensions.get('width')} x {dimensions.get('height')}",
-                flush=True,
-            )
-
-        else:
-            print(
-                "[Tesseract] Preprocessing skipped. Using original image.",
-                flush=True,
-            )
-
-        # STEP 6: RUN TESSERACT OCR
-        print("[Tesseract] Step 6: Starting OCR...", flush=True)
-        print(f"[Tesseract] Input image: {ocr_input_path}", flush=True)
-        print("[Tesseract] Language: eng", flush=True)
-
-        ocr_start = time.perf_counter()
-
-        raw_results = pytesseract.image_to_data(
-            ocr_input_path,
-            lang="eng",
-            config=TESSERACT_CONFIG,
-            output_type=Output.DICT,
-        )
-
-        ocr_time = round(
-            (time.perf_counter() - ocr_start) * 1000,
-            2,
-        )
-
-        print(
-            f"[Tesseract] OCR completed successfully ({ocr_time} ms)",
-            flush=True,
-        )
-
-        # STEP 7: COUNT DETECTED WORDS
-        detected_words = sum(
-            1
-            for word in raw_results["text"]
-            if str(word).strip()
-        )
-
-        print(
-            f"[Tesseract] Detected words before formatting: "
-            f"{detected_words}",
-            flush=True,
-        )
-
-        # STEP 8: FORMAT RESULTS
-        print("[Tesseract] Step 8: Formatting OCR results...", flush=True)
-
-        results = format_tesseract_results(raw_results)
-
-        print(
-            f"[Tesseract] Detected lines: {len(results)}",
-            flush=True,
-        )
-
-        extracted_text = "\n".join(
-            item["text"] for item in results
-        )
-
-        confidences = [
-            item["confidence"] for item in results
-        ]
-
-        average_confidence = (
-            round(sum(confidences) / len(confidences), 2)
-            if confidences
-            else 0
-        )
-
-        total_lines = len(results)
-
-        flagged_lines = sum(
-            1 for item in results if item["flagged"]
-        )
-
-        print(
-            f"[Tesseract] Average confidence: "
-            f"{average_confidence}%",
-            flush=True,
-        )
-
-        print(
-            f"[Tesseract] Flagged lines: {flagged_lines}",
-            flush=True,
-        )
-
-        # STEP 9: COMPLETE REQUEST
-        total_time = round(
-            (time.perf_counter() - request_start) * 1000,
-            2,
-        )
-
-        print("[Tesseract] REQUEST COMPLETED SUCCESSFULLY", flush=True)
-        print(
-            f"[Tesseract] Preprocessing time: "
-            f"{preprocessing_result.get('total_time_ms', 0)} ms",
-            flush=True,
-        )
-        print(f"[Tesseract] OCR time: {ocr_time} ms", flush=True)
-        print(f"[Tesseract] Total request time: {total_time} ms", flush=True)
-        print("=" * 60 + "\n", flush=True)
-
-        return {
-            "success": True,
-            "engine": "Tesseract",
-            "filename": file.filename,
-
-            "original_image": {
-                "preserved": True,
-                "width": original_width,
-                "height": original_height,
-            },
-
-            "preprocessing": preprocessing_result,
-
-            "settings": {
-                "enabled": preprocessing,
-                **settings,
-            },
-
-            "text": extracted_text,
-
-            "confidence_summary": {
-                "average": average_confidence,
-                "total_lines": total_lines,
-                "flagged_lines": flagged_lines,
-            },
-
-            "results": results,
-
-            "processing_time_ms": {
-                "preprocessing": preprocessing_result.get(
-                    "total_time_ms", 0
-                ),
-                "ocr": ocr_time,
-                "total": round(
-                    preprocessing_result.get(
-                        "total_time_ms", 0
-                    ) + ocr_time,
-                    2,
-                ),
-            },
-        }
-
-    except HTTPException as error:
-        print(
-            f"[Tesseract] REQUEST VALIDATION ERROR: {error.detail}",
-            flush=True,
-        )
-        raise
-
-    except Exception as error:
-        print("\n[Tesseract] REQUEST FAILED", flush=True)
-        print(
-            f"[Tesseract] Error type: {type(error).__name__}",
-            flush=True,
-        )
-        print(
-            f"[Tesseract] Error message: {error}",
-            flush=True,
-        )
-        traceback.print_exc()
-
-        raise HTTPException(
-            status_code=500,
-            detail=f"Tesseract processing failed: {str(error)}",
-        )
-
-    finally:
-        if temp_dir:
-            shutil.rmtree(temp_dir, ignore_errors=True)
-            print("[Tesseract] Temporary files cleaned up.", flush=True)
