@@ -29,3 +29,17 @@ tmp/
 Thumbs.db
 .vercel
 .env*
+
+# Health record documents and personal data
+HealthRecord.pdf
+Paolo_HealthRecord-1.png
+misc/
+
+# Temporary OCR crops and debug images
+*_crop.png
+*_zoom.png
+*_debug.png
+*_overlay.png
+*_reference.png
+*_test.png
+main.py.backup

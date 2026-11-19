@@ -75,6 +75,16 @@ def preprocess_image(
 
     if image is None:
         raise ValueError("Unable to read uploaded image.")
+        
+    # Coordinate tracking for Field Accuracy
+    original_height, original_width = image.shape[:2]
+
+    resize_scale_x = 1.0
+    resize_scale_y = 1.0
+
+    deskew_angle = 0.0
+    deskew_matrix = None
+    inverse_deskew_matrix = None
 
     timings = {}
     applied = []
@@ -104,9 +114,11 @@ def preprocess_image(
             ),
         )
 
-    # 2. RESIZE
+        # 2. RESIZE
     if resize:
         def resize_image(img):
+            nonlocal resize_scale_x, resize_scale_y
+
             height, width = img.shape[:2]
             longest = max(height, width)
 
@@ -115,14 +127,19 @@ def preprocess_image(
 
             scale = MAX_IMAGE_SIDE / longest
 
-            return cv2.resize(
+            new_width = int(width * scale)
+            new_height = int(height * scale)
+
+            resized = cv2.resize(
                 img,
-                (
-                    int(width * scale),
-                    int(height * scale),
-                ),
+                (new_width, new_height),
                 interpolation=cv2.INTER_AREA,
             )
+
+            resize_scale_x = new_width / original_width
+            resize_scale_y = new_height / original_height
+
+            return resized
 
         record("resize", resize_image)
 
@@ -152,6 +169,8 @@ def preprocess_image(
     # 4. DESKEWING
     if deskewing:
         def deskew_image(img):
+            nonlocal deskew_angle, deskew_matrix, inverse_deskew_matrix
+
             gray = (
                 img
                 if len(img.shape) == 2
@@ -211,6 +230,13 @@ def preprocess_image(
                 center,
                 median_angle,
                 1.0,
+            )
+
+            deskew_angle = median_angle
+            deskew_matrix = matrix.tolist()
+
+            inverse_deskew_matrix = (
+                cv2.invertAffineTransform(matrix).tolist()
             )
 
             return cv2.warpAffine(
@@ -293,9 +319,23 @@ def preprocess_image(
         "applied": applied,
         "timings_ms": timings,
         "total_time_ms": total_time,
+
+        "original_dimensions": {
+            "width": original_width,
+            "height": original_height,
+        },
+
         "output_dimensions": {
             "width": width,
             "height": height,
+        },
+
+        "coordinate_transform": {
+            "resize_scale_x": resize_scale_x,
+            "resize_scale_y": resize_scale_y,
+            "deskew_angle": deskew_angle,
+            "deskew_matrix": deskew_matrix,
+            "inverse_deskew_matrix": inverse_deskew_matrix,
         },
     }
 
@@ -504,6 +544,7 @@ def get_paddle_ocr():
     return _paddle_ocr
 
 
+
 # --------------------------------------------------
 # PADDLEOCR RESULT FORMATTER
 # --------------------------------------------------
@@ -524,6 +565,8 @@ def format_paddle_results(predictions):
 
         texts = data.get("rec_texts", []) or []
         scores = data.get("rec_scores", []) or []
+        boxes = data.get("rec_boxes", []) or []
+        polygons = data.get("rec_polys", []) or []
 
         for index, line in enumerate(texts):
             line = str(line).strip()
@@ -552,14 +595,29 @@ def format_paddle_results(predictions):
             else:
                 status = "NEEDS_REVIEW"
 
+            bounding_box = (
+                [int(value) for value in boxes[index]]
+                if index < len(boxes)
+                else None
+            )
+
+            polygon = (
+                polygons[index]
+                if index < len(polygons)
+                else None
+            )
+
             results.append({
                 "text": line,
                 "confidence": confidence,
                 "status": status,
                 "flagged": confidence < 70,
+                "bounding_box": bounding_box,
+                "polygon": polygon,
             })
 
     return results
+
 
 
 # --------------------------------------------------
@@ -702,6 +760,20 @@ async def paddle_ocr_endpoint(
             "applied": [],
             "timings_ms": {},
             "total_time_ms": 0,
+            "original_dimensions": {
+                "width": original_width,
+                "height": original_height,
+            },
+            "output_dimensions": {
+                "width": original_width,
+                "height": original_height,
+            },
+            "coordinate_transform": {
+                "resize_scale_x": 1.0,
+                "resize_scale_y": 1.0,
+                "deskew_angle": 0.0,
+                "deskew_matrix": None,
+            },
         }
 
         ocr_input_path = original_path

@@ -1,0 +1,1232 @@
+{
+  "template": "CMDI Health Record",
+  "coordinate_system": "template_pdf_points",
+  "page_width": 612,
+  "page_height": 936,
+  "sections": [
+    {
+      "id": "student_information",
+      "name": "Student Information",
+      "fields": [
+        {
+          "id": "student_name",
+          "label": "Name",
+          "region": {
+            "x0": 54.4,
+            "y0": 98.0,
+            "x1": 281.6,
+            "y1": 113.2
+          },
+          "type": "text"
+        },
+        {
+          "id": "civil_status",
+          "label": "Civil Status",
+          "region": {
+            "x0": 334.8,
+            "y0": 98.0,
+            "x1": 382.0,
+            "y1": 113.2
+          },
+          "type": "text"
+        },
+        {
+          "id": "gender",
+          "label": "Gender",
+          "region": {
+            "x0": 419.6,
+            "y0": 98.0,
+            "x1": 462.8,
+            "y1": 113.2
+          },
+          "type": "text"
+        },
+        {
+          "id": "preferred_gender",
+          "label": "Preferred Gender",
+          "region": {
+            "x0": 535.6,
+            "y0": 98.0,
+            "x1": 590.8,
+            "y1": 113.2
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_address",
+          "label": "Address",
+          "region": {
+            "x0": 60,
+            "y0": 110,
+            "x1": 185,
+            "y1": 125
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_contact",
+          "label": "Contact Number",
+          "region": {
+            "x0": 510,
+            "y0": 110,
+            "x1": 590,
+            "y1": 125
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_age",
+          "label": "Age",
+          "region": {
+            "x0": 60,
+            "y0": 124,
+            "x1": 90,
+            "y1": 138
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_birthday",
+          "label": "Birthday",
+          "region": {
+            "x0": 125,
+            "y0": 124,
+            "x1": 180,
+            "y1": 138
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_birthplace",
+          "label": "Birthplace",
+          "region": {
+            "x0": 220,
+            "y0": 124,
+            "x1": 280,
+            "y1": 138
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_nationality",
+          "label": "Nationality",
+          "region": {
+            "x0": 325,
+            "y0": 124,
+            "x1": 400,
+            "y1": 138
+          },
+          "type": "text"
+        },
+        {
+          "id": "student_religion",
+          "label": "Religion",
+          "region": {
+            "x0": 505,
+            "y0": 124,
+            "x1": 560,
+            "y1": 138
+          },
+          "type": "text"
+        },
+        {
+          "id": "shs_grade_level",
+          "label": "SHS Grade Level",
+          "region": {
+            "x0": 85,
+            "y0": 70,
+            "x1": 126,
+            "y1": 82
+          },
+          "type": "text"
+        },
+        {
+          "id": "shs_section",
+          "label": "SHS Section",
+          "region": {
+            "x0": 153,
+            "y0": 70,
+            "x1": 250,
+            "y1": 82
+          },
+          "type": "text"
+        },
+        {
+          "id": "college_course",
+          "label": "College Course",
+          "region": {
+            "x0": 80,
+            "y0": 80,
+            "x1": 126,
+            "y1": 94
+          },
+          "type": "text"
+        },
+        {
+          "id": "college_level_block",
+          "label": "College Level & Block",
+          "region": {
+            "x0": 169,
+            "y0": 80,
+            "x1": 250,
+            "y1": 94
+          },
+          "type": "text"
+        },
+        {
+          "id": "spouse_name",
+          "label": "Spouse Name",
+          "region": {
+            "x0": 105,
+            "y0": 137,
+            "x1": 220,
+            "y1": 147
+          },
+          "type": "text"
+        },
+        {
+          "id": "spouse_contact",
+          "label": "Spouse Contact Number",
+          "region": {
+            "x0": 65,
+            "y0": 147,
+            "x1": 160,
+            "y1": 159
+          },
+          "type": "text"
+        },
+        {
+          "id": "spouse_address",
+          "label": "Spouse Address",
+          "region": {
+            "x0": 210,
+            "y0": 147,
+            "x1": 340,
+            "y1": 159
+          },
+          "type": "text"
+        },
+        {
+          "id": "spouse_occupation",
+          "label": "Spouse Occupation",
+          "region": {
+            "x0": 507,
+            "y0": 147,
+            "x1": 580,
+            "y1": 159
+          },
+          "type": "text"
+        },
+        {
+          "id": "mother_guardian_name",
+          "label": "Mother/Guardian Name",
+          "region": {
+            "x0": 115,
+            "y0": 158,
+            "x1": 190,
+            "y1": 170
+          },
+          "type": "text"
+        },
+        {
+          "id": "mother_contact",
+          "label": "Mother/Guardian Contact Number",
+          "region": {
+            "x0": 65,
+            "y0": 170,
+            "x1": 160,
+            "y1": 182
+          },
+          "type": "text"
+        },
+        {
+          "id": "mother_address",
+          "label": "Mother/Guardian Address",
+          "region": {
+            "x0": 220,
+            "y0": 170,
+            "x1": 340,
+            "y1": 182
+          },
+          "type": "text"
+        },
+        {
+          "id": "mother_occupation",
+          "label": "Mother/Guardian Occupation",
+          "region": {
+            "x0": 507,
+            "y0": 170,
+            "x1": 580,
+            "y1": 182
+          },
+          "type": "text"
+        },
+        {
+          "id": "father_name",
+          "label": "Father Name",
+          "region": {
+            "x0": 80,
+            "y0": 181,
+            "x1": 145,
+            "y1": 193
+          },
+          "type": "text"
+        },
+        {
+          "id": "father_contact",
+          "label": "Father Contact Number",
+          "region": {
+            "x0": 65,
+            "y0": 193,
+            "x1": 160,
+            "y1": 205
+          },
+          "type": "text"
+        },
+        {
+          "id": "father_address",
+          "label": "Father Address",
+          "region": {
+            "x0": 220,
+            "y0": 193,
+            "x1": 340,
+            "y1": 205
+          },
+          "type": "text"
+        },
+        {
+          "id": "father_occupation",
+          "label": "Father Occupation",
+          "region": {
+            "x0": 507,
+            "y0": 193,
+            "x1": 580,
+            "y1": 205
+          },
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "medical_history",
+      "name": "Medical History",
+      "fields": [
+        {
+          "id": "medical_allergy",
+          "label": "Allergy",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_anemia",
+          "label": "Anemia",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_asthma",
+          "label": "Asthma",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_behavior_problem",
+          "label": "Behavior Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_bleeding_problem",
+          "label": "Bleeding Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_chicken_pox",
+          "label": "Chicken Pox",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_convulsion",
+          "label": "Convulsion",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_diabetes",
+          "label": "Diabetes",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_ear_problem",
+          "label": "Ear Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_eating_disorder",
+          "label": "Eating Disorder",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_eye_problem",
+          "label": "Eye Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_dengue",
+          "label": "Dengue",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_epilepsy",
+          "label": "Epilepsy",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_fainting",
+          "label": "Fainting",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_fracture",
+          "label": "Fracture",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_hearing_problem",
+          "label": "Hearing Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_heart_problem",
+          "label": "Heart Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_indigestion",
+          "label": "Indigestion",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_insomnia",
+          "label": "Insomnia",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_intestinal_worm",
+          "label": "Intestinal Worm",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_kidney_disease",
+          "label": "Kidney Disease",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_liver_disease",
+          "label": "Liver Disease",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_lung_disease",
+          "label": "Lung Disease",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_measles",
+          "label": "Measles",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_mumps",
+          "label": "Mumps",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_pneumonia",
+          "label": "Pneumonia",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_skin_problem",
+          "label": "Skin Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_speech_problem",
+          "label": "Speech Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_spine_disorder",
+          "label": "Spine Disorder",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_tonsillitis",
+          "label": "Tonsillitis",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_tuberculosis",
+          "label": "Tuberculosis",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_typhoid_fever",
+          "label": "Typhoid Fever",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "medical_others",
+          "label": "Others",
+          "type": "checkbox",
+          "region": null
+        }
+      ]
+    },
+    {
+      "id": "family_medical_history",
+      "name": "Family Medical History",
+      "fields": [
+        {
+          "id": "family_cancer",
+          "label": "Cancer",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_bleeding_problem",
+          "label": "Bleeding Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_diabetes",
+          "label": "Diabetes",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_epilepsy",
+          "label": "Epilepsy",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_heart_problem",
+          "label": "Heart Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_hypertension",
+          "label": "Hypertension",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_kidney_disease",
+          "label": "Kidney Disease",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_mental_problem",
+          "label": "Mental Problem",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_obesity",
+          "label": "Obesity",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_stroke",
+          "label": "Stroke",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "family_tuberculosis",
+          "label": "Tuberculosis",
+          "type": "checkbox",
+          "region": null
+        }
+      ]
+    },
+    {
+      "id": "student_experiences",
+      "name": "Student Experiences",
+      "fields": [
+        {
+          "id": "hospitalization",
+          "label": "Hospitalization",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "surgery_operation",
+          "label": "Surgery/Operation",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "special_medication",
+          "label": "On Special Medication",
+          "type": "checkbox",
+          "region": null
+        },
+        {
+          "id": "hospitalization_reason",
+          "label": "Hospitalization Reason",
+          "type": "text",
+          "region": {
+            "x0": 474.84,
+            "y0": 356.76,
+            "x1": 551.88,
+            "y1": 367.2
+          }
+        },
+        {
+          "id": "surgery_reason",
+          "label": "Surgery/Operation Reason",
+          "type": "text",
+          "region": {
+            "x0": 474.84,
+            "y0": 368.28,
+            "x1": 551.16,
+            "y1": 375.48
+          }
+        },
+        {
+          "id": "special_medication_drugs",
+          "label": "What Drugs?",
+          "type": "text",
+          "region": {
+            "x0": 485.64,
+            "y0": 376.92,
+            "x1": 551.88,
+            "y1": 384.48
+          }
+        }
+      ]
+    },
+    {
+      "id": "for_boys",
+      "name": "For Boys",
+      "fields": [
+        {
+          "id": "circumcision",
+          "label": "Circumcision",
+          "type": "checkbox",
+          "region": null
+        }
+      ]
+    },
+    {
+      "id": "for_girls",
+      "name": "For Girls",
+      "fields": [
+        {
+          "id": "age_of_menarche",
+          "label": "Age of Menarche",
+          "type": "text",
+          "region": {
+            "x0": 387.36,
+            "y0": 421.56,
+            "x1": 434.16,
+            "y1": 430.2
+          }
+        },
+        {
+          "id": "last_menstrual_period",
+          "label": "Last Menstrual Period",
+          "type": "date",
+          "region": {
+            "x0": 522.36,
+            "y0": 421.2,
+            "x1": 575.28,
+            "y1": 430.2
+          }
+        },
+        {
+          "id": "menstrual_cycle",
+          "label": "Cycle",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "menstrual_flow",
+          "label": "Flow",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "regular_cycle_days",
+          "label": "Regular Cycle Days",
+          "type": "text",
+          "region": {
+            "x0": 379.08,
+            "y0": 429.84,
+            "x1": 412.92,
+            "y1": 438.12
+          }
+        },
+        {
+          "id": "irregular_cycle_days",
+          "label": "Irregular Cycle Days",
+          "type": "text",
+          "region": {
+            "x0": 480.96,
+            "y0": 429.84,
+            "x1": 519.84,
+            "y1": 437.76
+          }
+        }
+      ]
+    },
+    {
+      "id": "personal_social_history",
+      "name": "Personal and Social History",
+      "fields": [
+        {
+          "id": "close_friend",
+          "label": "Do you have a close friend?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "number_of_friends",
+          "label": "Number of Close Friends",
+          "type": "text",
+          "region": {
+            "x0": 431.64,
+            "y0": 469.08,
+            "x1": 446.76,
+            "y1": 476.64
+          }
+        },
+        {
+          "id": "drive",
+          "label": "Do you drive?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "drive_regularly",
+          "label": "Do you drive regularly?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "drink_alcohol",
+          "label": "Do you drink alcoholic beverages?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "alcohol_frequency",
+          "label": "How Often Do You Drink?",
+          "type": "text",
+          "region": {
+            "x0": 442.08,
+            "y0": 487.08,
+            "x1": 463.32,
+            "y1": 494.64
+          }
+        },
+        {
+          "id": "alcohol_quantity",
+          "label": "How Much Do You Drink?",
+          "type": "text",
+          "region": {
+            "x0": 504.36,
+            "y0": 486.36,
+            "x1": 532.44,
+            "y1": 494.28
+          }
+        },
+        {
+          "id": "smoke",
+          "label": "Do you smoke?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "cigarettes_per_day",
+          "label": "Sticks per Day",
+          "type": "text",
+          "region": {
+            "x0": 442.44,
+            "y0": 496.08,
+            "x1": 463.68,
+            "y1": 502.2
+          }
+        },
+        {
+          "id": "smoking_since_when",
+          "label": "Since When?",
+          "type": "text",
+          "region": {
+            "x0": 508.32,
+            "y0": 496.08,
+            "x1": 532.08,
+            "y1": 502.56
+          }
+        },
+        {
+          "id": "illicit_drugs",
+          "label": "Have you taken illicit drugs?",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "illicit_drugs_kind",
+          "label": "Kind of Drugs",
+          "type": "text",
+          "region": {
+            "x0": 424.44,
+            "y0": 504.72,
+            "x1": 452.16,
+            "y1": 511.2
+          }
+        },
+        {
+          "id": "regular_drug_use",
+          "label": "Regular Drug Use",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "experienced_abuse",
+          "label": "Have you experienced abuse?",
+          "type": "choice",
+          "region": null
+        }
+      ]
+    },
+    {
+      "id": "abuse_details",
+      "name": "Abuse Details",
+      "fields": [
+        {
+          "id": "physical_abuse",
+          "label": "Physical",
+          "type": "choice",
+          "region": {
+            "x0": 346.32,
+            "y0": 521.64,
+            "x1": 397.44,
+            "y1": 529.2
+          }
+        },
+        {
+          "id": "sexual_abuse",
+          "label": "Sexual",
+          "type": "choice",
+          "region": {
+            "x0": 347.04,
+            "y0": 530.28,
+            "x1": 398.52,
+            "y1": 537.84
+          }
+        },
+        {
+          "id": "verbal_abuse",
+          "label": "Verbal",
+          "type": "choice",
+          "region": {
+            "x0": 346.32,
+            "y0": 537.48,
+            "x1": 398.16,
+            "y1": 544.32
+          }
+        }
+      ]
+    },
+    {
+      "id": "physical_examination",
+      "name": "Physical Examination",
+      "fields": [
+        {
+          "id": "examination_date",
+          "label": "Date",
+          "type": "date",
+          "region": {
+            "x0": 102.6,
+            "y0": 617.04,
+            "x1": 549.0,
+            "y1": 626.4
+          }
+        },
+        {
+          "id": "bmi",
+          "label": "Body Mass Index (BMI)",
+          "type": "number",
+          "region": {
+            "x0": 102.96,
+            "y0": 625.32,
+            "x1": 548.64,
+            "y1": 635.04
+          }
+        },
+        {
+          "id": "weight",
+          "label": "Weight",
+          "type": "number",
+          "region": {
+            "x0": 101.88,
+            "y0": 633.96,
+            "x1": 547.56,
+            "y1": 642.24
+          }
+        },
+        {
+          "id": "height",
+          "label": "Height",
+          "type": "number",
+          "region": {
+            "x0": 102.24,
+            "y0": 642.6,
+            "x1": 548.28,
+            "y1": 652.32
+          }
+        },
+        {
+          "id": "blood_pressure",
+          "label": "Blood Pressure",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 651.24,
+            "x1": 548.28,
+            "y1": 660.6
+          }
+        },
+        {
+          "id": "pulse",
+          "label": "Pulse",
+          "type": "number",
+          "region": {
+            "x0": 101.88,
+            "y0": 660.24,
+            "x1": 548.64,
+            "y1": 668.16
+          }
+        },
+        {
+          "id": "skin",
+          "label": "Skin",
+          "type": "text",
+          "region": {
+            "x0": 101.88,
+            "y0": 668.88,
+            "x1": 547.92,
+            "y1": 676.8
+          }
+        },
+        {
+          "id": "head",
+          "label": "Head",
+          "type": "text",
+          "region": {
+            "x0": 103.32,
+            "y0": 677.52,
+            "x1": 548.64,
+            "y1": 686.52
+          }
+        },
+        {
+          "id": "eyes_vision",
+          "label": "Eyes/Vision",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 686.16,
+            "x1": 548.64,
+            "y1": 694.44
+          }
+        },
+        {
+          "id": "ears_hearing",
+          "label": "Ears/Hearing",
+          "type": "text",
+          "region": {
+            "x0": 101.52,
+            "y0": 693.0,
+            "x1": 548.28,
+            "y1": 702.72
+          }
+        },
+        {
+          "id": "nose",
+          "label": "Nose",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 702.72,
+            "x1": 548.28,
+            "y1": 711.36
+          }
+        },
+        {
+          "id": "mouth",
+          "label": "Mouth",
+          "type": "text",
+          "region": {
+            "x0": 101.88,
+            "y0": 711.36,
+            "x1": 549.0,
+            "y1": 720.0
+          }
+        },
+        {
+          "id": "gum",
+          "label": "Gum",
+          "type": "text",
+          "region": {
+            "x0": 102.6,
+            "y0": 719.64,
+            "x1": 548.28,
+            "y1": 729.0
+          }
+        },
+        {
+          "id": "throat",
+          "label": "Throat",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 728.64,
+            "x1": 549.0,
+            "y1": 736.56
+          }
+        },
+        {
+          "id": "neck",
+          "label": "Neck",
+          "type": "text",
+          "region": {
+            "x0": 101.88,
+            "y0": 736.92,
+            "x1": 547.92,
+            "y1": 745.56
+          }
+        },
+        {
+          "id": "chest",
+          "label": "Chest",
+          "type": "text",
+          "region": {
+            "x0": 102.6,
+            "y0": 745.2,
+            "x1": 549.0,
+            "y1": 753.48
+          }
+        },
+        {
+          "id": "lungs",
+          "label": "Lungs",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 754.56,
+            "x1": 548.28,
+            "y1": 762.84
+          }
+        },
+        {
+          "id": "abdomen",
+          "label": "Abdomen",
+          "type": "text",
+          "region": {
+            "x0": 101.88,
+            "y0": 762.48,
+            "x1": 548.28,
+            "y1": 771.12
+          }
+        },
+        {
+          "id": "limbs",
+          "label": "Limbs",
+          "type": "text",
+          "region": {
+            "x0": 102.24,
+            "y0": 771.48,
+            "x1": 548.28,
+            "y1": 780.12
+          }
+        },
+        {
+          "id": "neuro",
+          "label": "Neuro",
+          "type": "text",
+          "region": {
+            "x0": 101.88,
+            "y0": 779.4,
+            "x1": 547.92,
+            "y1": 787.68
+          }
+        },
+        {
+          "id": "other_significant_findings",
+          "label": "Other Significant Findings",
+          "type": "text",
+          "region": {
+            "x0": 105.12,
+            "y0": 795.24,
+            "x1": 442.8,
+            "y1": 804.96
+          }
+        }
+      ]
+    },
+    {
+      "id": "fitness_certification",
+      "name": "Fitness Certification",
+      "fields": [
+        {
+          "id": "fitness_status",
+          "label": "Fitness Status",
+          "type": "choice",
+          "region": null
+        },
+        {
+          "id": "fitness_pending_reason",
+          "label": "Pending Reason",
+          "type": "text",
+          "region": {
+            "x0": 404.64,
+            "y0": 807.84,
+            "x1": 521.64,
+            "y1": 817.56
+          }
+        }
+      ]
+    },
+    {
+      "id": "physician_findings",
+      "name": "Physician's Findings and Recommendations",
+      "fields": [
+        {
+          "id": "impressions",
+          "label": "Impressions",
+          "type": "text",
+          "region": {
+            "x0": 69.12,
+            "y0": 817.56,
+            "x1": 224.28,
+            "y1": 839.16
+          }
+        },
+        {
+          "id": "recommendations",
+          "label": "Recommendations",
+          "type": "text",
+          "region": {
+            "x0": 406.08,
+            "y0": 819.0,
+            "x1": 522.72,
+            "y1": 838.44
+          }
+        }
+      ]
+    },
+    {
+      "id": "physician_details",
+      "name": "Physician's Details",
+      "fields": [
+        {
+          "id": "physician_signature",
+          "label": "School Physician's Signature over Printed Name",
+          "type": "text",
+          "region": {
+            "x0": 48.96,
+            "y0": 881.64,
+            "x1": 222.84,
+            "y1": 896.76
+          }
+        },
+        {
+          "id": "physician_license_number",
+          "label": "License Number",
+          "type": "text",
+          "region": {
+            "x0": 275.4,
+            "y0": 877.32,
+            "x1": 386.64,
+            "y1": 896.76
+          }
+        },
+        {
+          "id": "physician_date_of_examination",
+          "label": "Date of Examination",
+          "type": "date",
+          "region": {
+            "x0": 425.16,
+            "y0": 879.12,
+            "x1": 524.88,
+            "y1": 897.12
+          }
+        }
+      ]
+    },
+    {
+      "id": "student_certification",
+      "name": "Student Certification",
+      "fields": [
+        {
+          "id": "student_signature",
+          "label": "Student's Signature",
+          "type": "text",
+          "region": {
+            "x0": 241.56,
+            "y0": 571.32,
+            "x1": 366.12,
+            "y1": 582.12
+          }
+        },
+        {
+          "id": "student_certification_date",
+          "label": "Student Certification Date",
+          "type": "date",
+          "region": {
+            "x0": 398.52,
+            "y0": 572.04,
+            "x1": 451.44,
+            "y1": 582.48
+          }
+        }
+      ]
+    }
+  ]
+}
