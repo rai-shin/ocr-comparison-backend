@@ -516,6 +516,12 @@
       "name": "Family Medical History",
       "fields": [
         {
+          "id": "family_allergy",
+          "label": "Allergy",
+          "type": "checkbox",
+          "region": null
+        },
+        {
           "id": "family_cancer",
           "label": "Cancer",
           "type": "checkbox",
@@ -591,19 +597,61 @@
           "id": "hospitalization",
           "label": "Hospitalization",
           "type": "checkbox",
-          "region": null
+          "region": null,
+          "regions": {
+            "no": {
+              "x0": 383.76,
+              "y0": 360.0,
+              "x1": 406.8,
+              "y1": 367.2
+            },
+            "yes": {
+              "x0": 425.76,
+              "y0": 359.76,
+              "x1": 443.76,
+              "y1": 367.2
+            }
+          }
         },
         {
           "id": "surgery_operation",
           "label": "Surgery/Operation",
           "type": "checkbox",
-          "region": null
+          "region": null,
+          "regions": {
+            "no": {
+              "x0": 384.0,
+              "y0": 369.36,
+              "x1": 406.56,
+              "y1": 376.08
+            },
+            "yes": {
+              "x0": 425.28,
+              "y0": 368.64,
+              "x1": 442.08,
+              "y1": 375.6
+            }
+          }
         },
         {
           "id": "special_medication",
           "label": "On Special Medication",
           "type": "checkbox",
-          "region": null
+          "region": null,
+          "regions": {
+            "no": {
+              "x0": 383.52,
+              "y0": 377.04,
+              "x1": 406.56,
+              "y1": 384.48
+            },
+            "yes": {
+              "x0": 424.8,
+              "y0": 377.76,
+              "x1": 442.8,
+              "y1": 384.72
+            }
+          }
         },
         {
           "id": "hospitalization_reason",
@@ -648,7 +696,21 @@
           "id": "circumcision",
           "label": "Circumcision",
           "type": "checkbox",
-          "region": null
+          "region": null,
+          "regions": {
+            "done": {
+              "x0": 437.52,
+              "y0": 404.64,
+              "x1": 461.52,
+              "y1": 412.8
+            },
+            "not_done": {
+              "x0": 526.08,
+              "y0": 405.6,
+              "x1": 553.2,
+              "y1": 413.28
+            }
+          }
         }
       ]
     },
@@ -665,6 +727,14 @@
             "y0": 421.56,
             "x1": 434.16,
             "y1": 430.2
+          },
+          "regions": {
+            "value": {
+              "x0": 387.84,
+              "y0": 421.2,
+              "x1": 435.12,
+              "y1": 429.84
+            }
           }
         },
         {
@@ -676,19 +746,61 @@
             "y0": 421.2,
             "x1": 575.28,
             "y1": 430.2
+          },
+          "regions": {
+            "value": {
+              "x0": 523.92,
+              "y0": 423.12,
+              "x1": 560.4,
+              "y1": 430.32
+            }
           }
         },
         {
           "id": "menstrual_cycle",
           "label": "Cycle",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "option_1": {
+              "x0": 379.44,
+              "y0": 432.0,
+              "x1": 412.08,
+              "y1": 438.72
+            },
+            "option_2": {
+              "x0": 482.16,
+              "y0": 430.8,
+              "x1": 520.8,
+              "y1": 439.2
+            }
+          }
         },
         {
           "id": "menstrual_flow",
           "label": "Flow",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "option_1": {
+              "x0": 377.52,
+              "y0": 440.64,
+              "x1": 406.32,
+              "y1": 447.36
+            },
+            "option_2": {
+              "x0": 441.12,
+              "y0": 439.2,
+              "x1": 479.04,
+              "y1": 447.84
+            },
+            "option_3": {
+              "x0": 506.16,
+              "y0": 440.64,
+              "x1": 541.92,
+              "y1": 446.88
+            }
+          }
         },
         {
           "id": "regular_cycle_days",
@@ -699,6 +811,14 @@
             "y0": 429.84,
             "x1": 412.92,
             "y1": 438.12
+          },
+          "regions": {
+            "value": {
+              "x0": 379.68,
+              "y0": 431.28,
+              "x1": 411.6,
+              "y1": 438.0
+            }
           }
         },
         {
@@ -710,6 +830,14 @@
             "y0": 429.84,
             "x1": 519.84,
             "y1": 437.76
+          },
+          "regions": {
+            "value": {
+              "x0": 481.68,
+              "y0": 431.04,
+              "x1": 520.32,
+              "y1": 438.72
+            }
           }
         }
       ]
@@ -722,7 +850,21 @@
           "id": "close_friend",
           "label": "Do you have a close friend?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 347.04,
+              "y0": 469.44,
+              "x1": 361.68,
+              "y1": 477.12
+            },
+            "no": {
+              "x0": 382.08,
+              "y0": 466.56,
+              "x1": 396.96,
+              "y1": 476.4
+            }
+          }
         },
         {
           "id": "number_of_friends",
@@ -739,19 +881,61 @@
           "id": "drive",
           "label": "Do you drive?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 346.8,
+              "y0": 478.56,
+              "x1": 360.72,
+              "y1": 485.28
+            },
+            "no": {
+              "x0": 383.76,
+              "y0": 480.0,
+              "x1": 396.48,
+              "y1": 485.52
+            }
+          }
         },
         {
           "id": "drive_regularly",
           "label": "Do you drive regularly?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 478.8,
+              "y0": 478.32,
+              "x1": 493.44,
+              "y1": 485.76
+            },
+            "no": {
+              "x0": 450.24,
+              "y0": 478.32,
+              "x1": 465.12,
+              "y1": 485.76
+            }
+          }
         },
         {
           "id": "drink_alcohol",
           "label": "Do you drink alcoholic beverages?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 346.8,
+              "y0": 486.96,
+              "x1": 362.64,
+              "y1": 494.4
+            },
+            "no": {
+              "x0": 383.52,
+              "y0": 486.48,
+              "x1": 398.16,
+              "y1": 494.4
+            }
+          }
         },
         {
           "id": "alcohol_frequency",
@@ -779,7 +963,21 @@
           "id": "smoke",
           "label": "Do you smoke?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 346.8,
+              "y0": 495.6,
+              "x1": 362.16,
+              "y1": 503.52
+            },
+            "no": {
+              "x0": 383.76,
+              "y0": 494.88,
+              "x1": 396.48,
+              "y1": 502.8
+            }
+          }
         },
         {
           "id": "cigarettes_per_day",
@@ -807,7 +1005,21 @@
           "id": "illicit_drugs",
           "label": "Have you taken illicit drugs?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 346.8,
+              "y0": 502.32,
+              "x1": 361.68,
+              "y1": 511.68
+            },
+            "no": {
+              "x0": 383.52,
+              "y0": 503.52,
+              "x1": 398.16,
+              "y1": 511.92
+            }
+          }
         },
         {
           "id": "illicit_drugs_kind",
@@ -824,13 +1036,41 @@
           "id": "regular_drug_use",
           "label": "Regular Drug Use",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 540.24,
+              "y0": 503.76,
+              "x1": 556.08,
+              "y1": 511.92
+            },
+            "no": {
+              "x0": 509.04,
+              "y0": 503.76,
+              "x1": 525.36,
+              "y1": 510.96
+            }
+          }
         },
         {
           "id": "experienced_abuse",
           "label": "Have you experienced abuse?",
           "type": "choice",
-          "region": null
+          "region": null,
+          "regions": {
+            "yes": {
+              "x0": 347.52,
+              "y0": 513.84,
+              "x1": 361.44,
+              "y1": 519.84
+            },
+            "no": {
+              "x0": 384.24,
+              "y0": 513.6,
+              "x1": 397.68,
+              "y1": 520.32
+            }
+          }
         }
       ]
     },
@@ -847,6 +1087,20 @@
             "y0": 521.64,
             "x1": 397.44,
             "y1": 529.2
+          },
+          "regions": {
+            "yes": {
+              "x0": 347.52,
+              "y0": 521.76,
+              "x1": 362.64,
+              "y1": 528.48
+            },
+            "no": {
+              "x0": 383.52,
+              "y0": 521.28,
+              "x1": 396.24,
+              "y1": 528.48
+            }
           }
         },
         {
@@ -858,6 +1112,20 @@
             "y0": 530.28,
             "x1": 398.52,
             "y1": 537.84
+          },
+          "regions": {
+            "yes": {
+              "x0": 347.76,
+              "y0": 529.92,
+              "x1": 361.92,
+              "y1": 536.88
+            },
+            "no": {
+              "x0": 383.28,
+              "y0": 528.48,
+              "x1": 397.44,
+              "y1": 536.88
+            }
           }
         },
         {
@@ -869,6 +1137,20 @@
             "y0": 537.48,
             "x1": 398.16,
             "y1": 544.32
+          },
+          "regions": {
+            "yes": {
+              "x0": 345.12,
+              "y0": 537.12,
+              "x1": 360.72,
+              "y1": 545.52
+            },
+            "no": {
+              "x0": 383.04,
+              "y0": 537.36,
+              "x1": 396.24,
+              "y1": 545.52
+            }
           }
         }
       ]

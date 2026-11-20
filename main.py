@@ -15,6 +15,11 @@ import numpy as np
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from document_templates.registry import (
+    get_template,
+    get_available_templates,
+)
+from document_templates.detector import detect_template
 
 
 app = FastAPI(
@@ -369,6 +374,12 @@ async def api_status():
         ],
     }
 
+@app.get("/api/templates")
+async def list_templates():
+    return {
+        "success": True,
+        "templates": get_available_templates(),
+    }
 
 # --------------------------------------------------
 # PREPROCESSING ENDPOINT
@@ -649,6 +660,7 @@ def get_preprocessing_settings(
 @app.post("/api/ocr/paddle")
 async def paddle_ocr_endpoint(
     file: UploadFile = File(...),
+    template_id: str = Form(""),
     preprocessing: bool = Form(False),
     grayscale: bool = Form(False),
     resize: bool = Form(False),
@@ -911,6 +923,51 @@ async def paddle_ocr_endpoint(
             flush=True,
         )
 
+        # STEP 7.5: DETECT TEMPLATE AND EXTRACT STRUCTURED DATA
+        structured_data = None
+
+        # Use manually selected template if provided.
+        # Otherwise, detect the template using OCR text.
+        detected_template_id = (
+            template_id
+            if template_id
+            else detect_template(extracted_text)
+        )
+
+        template = (
+            get_template(detected_template_id)
+            if detected_template_id
+            else None
+        )
+
+        if template:
+            print(
+                f"[PaddleOCR] Detected template: {template['name']}",
+                flush=True,
+            )
+
+            print(
+                f"[PaddleOCR] Extracting {template['name']} data...",
+                flush=True,
+            )
+
+            structured_data = template["extractor"](
+                original_image,
+                engine,
+            )
+
+            print(
+                f"[PaddleOCR] {template['name']} extraction completed.",
+                flush=True,
+            )
+        else:
+            print(
+                "[PaddleOCR] No recognized document template. "
+                "Returning regular OCR results.",
+                flush=True,
+            )
+
+
         # STEP 8: COMPLETE RESPONSE
         total_time = round(
             (time.perf_counter() - request_start) * 1000,
@@ -940,6 +997,19 @@ async def paddle_ocr_endpoint(
             },
 
             "text": extracted_text,
+
+            "template_detection": {
+                "template_id": detected_template_id if template else None,
+                "template_name": template["name"] if template else None,
+                "detected": template is not None,
+                "method": (
+                    "manual"
+                    if template_id
+                    else "automatic"
+                ),
+            },
+
+            "structured_data": structured_data,
 
             "confidence_summary": {
                 "average": average_confidence,

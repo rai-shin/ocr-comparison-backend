@@ -58,3 +58,38 @@ FAMILY_HISTORY = {
     ],
     "responses": ["NO", "YES", "UNMARKED"],
 }
+
+STUDENT_EXPERIENCE = {
+    "title": "C. HAS THE STUDENT EXPERIENCED",
+    "columns": ["question", "no", "yes"],
+    "rows": [
+        "Hospitalization",
+        "Surgery / Operation",
+        "On special medication",
+    ],
+    "responses": ["NO", "YES", "UNMARKED"],
+}
+
+CIRCUMCISION = {
+    "title": "D. FOR BOYS",
+    "columns": ["procedure", "done", "not_done"],
+    "rows": ["Circumcision"],
+    "responses": ["DONE", "NOT DONE", "UNMARKED"],
+}
+
+PSYCHOSOCIAL_HISTORY = {
+    "title": "E. PSYCHOSOCIAL HISTORY",
+    "columns": ["question", "yes", "no"],
+    "rows": [
+        "Do you have a close friend?",
+        "Do you drive?",
+        "Do you drink alcohol bev.?",
+        "Do you smoke?",
+        "Have you taken illicit drugs?",
+        "Experienced abuse?",
+        "Physical",
+        "Sexual",
+        "Verbal",
+    ],
+    "responses": ["YES", "NO", "UNMARKED"],
+}

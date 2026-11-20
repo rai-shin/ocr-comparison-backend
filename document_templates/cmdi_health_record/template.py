@@ -1,4 +1,5 @@
-﻿from document_templates.cmdi_health_record.history_extraction import (
+﻿
+from document_templates.cmdi_health_record.history_extraction import (
     extract_history_tables,
 )
 
@@ -42,14 +43,17 @@ def add_review_information(rows):
     return enriched_rows
 
 
-def extract_structured_data(image):
+def extract_structured_data(image, ocr_engine=None):
     """
     Extract structured data specific to the CMDI Health Record.
 
     Raw OCR results are handled separately and are not modified here.
     """
 
-    history_tables = extract_history_tables(image)
+    history_tables = extract_history_tables(
+        image,
+        ocr_engine,
+    )
 
     return {
         "template_id": TEMPLATE_ID,
@@ -61,5 +65,15 @@ def extract_structured_data(image):
             "family_history": add_review_information(
                 history_tables["family_history"]
             ),
+            "student_experiences": add_review_information(
+                history_tables["student_experiences"]
+            ),
+            "circumcision": add_review_information(
+                history_tables["circumcision"]
+            ),
+            "psychosocial_history": add_review_information(
+                history_tables["psychosocial_history"]
+            ),
+            "for_girls": history_tables.get("for_girls", {}),
         },
     }
