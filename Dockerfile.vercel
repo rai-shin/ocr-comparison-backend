@@ -17,14 +17,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV PYTHONUNBUFFERED=1
 ENV PADDLE_PDX_ENABLE_MKLDNN_BYDEFAULT=False
 
-# Install the existing pinned Python dependencies.
+# Install Python dependencies.
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the existing FastAPI application.
+# Copy the FastAPI application and supporting files.
 COPY main.py .
+COPY document_templates/ ./document_templates/
+COPY health_record_fields.json .
+COPY health_record_template_labels.json .
 
-# Vercel routes traffic to port 80 by default.
 EXPOSE 80
 
 CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-80}"]
