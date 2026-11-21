@@ -506,28 +506,24 @@ def extract_history_tables(image, ocr_engine=None):
             image = cv2.cvtColor(image, cv2.COLOR_BGRA2GRAY)
         else:
             raise ValueError("Expected 3 or 4 image channels.")
-
-    minimum_width = 1530
-    minimum_height = 2340
-
-    if (
-        image.shape[1] < minimum_width
-        or image.shape[0] < minimum_height
-    ):
-        raise ValueError(
-            "Image resolution is below the recommended minimum "
-            f"of {minimum_width}x{minimum_height}. "
-            f"Received {image.shape[1]}x{image.shape[0]}."
-        )
-
+            
     if (
         image.shape[1] != REFERENCE_WIDTH
         or image.shape[0] != REFERENCE_HEIGHT
     ):
+        interpolation = (
+            cv2.INTER_CUBIC
+            if (
+                image.shape[1] < REFERENCE_WIDTH
+                or image.shape[0] < REFERENCE_HEIGHT
+            )
+            else cv2.INTER_AREA
+        )
+
         image = cv2.resize(
             image,
             (REFERENCE_WIDTH, REFERENCE_HEIGHT),
-            interpolation=cv2.INTER_AREA,
+            interpolation=interpolation,
         )
 
     extracted = {}
